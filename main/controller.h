@@ -3,19 +3,22 @@
 
 class Controller {
     public:
-    Controller(const char* addr);
+    Controller();
     void update();
-    float vx = 0;
-    float vy = 0;
-    float vtheta = 0;
-    float vHeight1 = 0;
-    float vHeight2 = 0;
+    void print();
+    int vx = 0;
+    int vy = 0;
+    int vTheta = 0;
+    int Height1 = 0;
+    int Height2 = 0;
     bool isAuto = false;
 
     protected:
-    float px = 0;
-    float py = 0;
-    float ptheta = 0;
-    float pHeight1 = 0;
-    float pHeight2 = 0;
+    int px = 0;
+    int py = 0;
+    int pTheta = 0;
+    int pHeight1 = 0;
+    int pHeight2 = 0;
+    const float kTheta = 1;
+    const float kHeight = 1;
 };
