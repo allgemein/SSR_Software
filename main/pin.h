@@ -11,4 +11,7 @@ const int pwm3 = 0;
 const int sensorR = 0;
 const int sensorC = 0;
 const int sensorL = 0;
+const int inL = 0;
+const int inC = 0;
+const int inR = 0;
 }  // namespace pin
