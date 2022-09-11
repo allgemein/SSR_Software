@@ -20,9 +20,9 @@ Motor motor3(pin::pwm3, pin::dir3);
 Arm arm1(0);
 Arm arm2(1);
 
-Omni omni(&motor1, &motor2, &motor3);
+Omni omni(motor1, motor2, motor3);
 
-LineTracer lt(&omni);
+LineTracer lt(omni);
 
 void loop() {
     Serial.println("loop...");

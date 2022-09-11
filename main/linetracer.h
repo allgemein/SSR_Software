@@ -3,6 +3,9 @@
 
 class LineTracer {
     public:
-    LineTracer(Omni* omni);
+    LineTracer(Omni& omni);
     void trace();
+
+    private:
+    Omni& _omni;
 };
