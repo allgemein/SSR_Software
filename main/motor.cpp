@@ -1,15 +1,16 @@
 #include "motor.h"
 
-Motor::Motor(int pwm, int dir) {
+Motor::Motor(int num, int pwm, int dir) {
+    _num = num;
     _pwm = pwm;
     _dir = dir;
 
-    ledcSetup(0, 20000, 8);
+    ledcSetup(_num, 20000, 8);
 
-    ledcAttachPin(_pwm, 0);
+    ledcAttachPin(_pwm, _num);
     pinMode(_dir, OUTPUT);
 
-    ledcWrite(0, 0);
+    ledcWrite(_num, 0);
     digitalWrite(_dir, LOW);
 }
 
@@ -21,10 +22,10 @@ void Motor::setSpeed(int speed) {
     }
 
     if (speed >= 0) {
-        ledcWrite(0, speed);
+        ledcWrite(_num, speed);
         digitalWrite(_dir, LOW);
     } else {
-        ledcWrite(0, -speed);
+        ledcWrite(_num, -speed);
         digitalWrite(_dir, HIGH);
     }
 }

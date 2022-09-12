@@ -1,7 +1,7 @@
 #pragma once
 
 namespace pin {
-int stepper1_A = 34;
+int stepper1_A = 33;  //回路直す
 int stepper1_B = 32;
 int stepper1_C = 25;
 int stepper1_D = 27;

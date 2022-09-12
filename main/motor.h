@@ -3,11 +3,12 @@
 
 class Motor {
     public:
-    Motor(int pwm, int dir);
+    Motor(int num, int pwm, int dir);
     void move(int distance);
     void setSpeed(int speed);
 
     protected:
+    int _num;
     int _pwm;
     int _dir;
 };

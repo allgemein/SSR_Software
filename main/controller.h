@@ -19,6 +19,6 @@ class Controller {
     int pTheta = 0;
     int pHeight1 = 0;
     int pHeight2 = 0;
-    const float kTheta = 1;
+    const float kTheta = 0;
     const float kHeight = 1;
 };
