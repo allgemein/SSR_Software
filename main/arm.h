@@ -2,12 +2,12 @@
 #include <Wire.h>
 
 class Arm {
-    private:
-    int height;
-    int degree;
-    int id;
-
     public:
-    Arm(unsigned int id);
-    void move(int vh);
+    Arm(int addr);
+    void move(int y1, int y2);
+
+    protected:
+    int _addr;
+    int _height;
+    int _degree;
 };
