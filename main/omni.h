@@ -12,6 +12,7 @@ class Omni {
 
     private:
     const int _threshold = 20;
+    int _vtheta = 0;
 
     Motor& _motor1;
     Motor& _motor2;
