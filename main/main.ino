@@ -26,28 +26,32 @@ LineTracer lt(omni);
 void loop() {
     Serial.println("loop...");
     ctl.update();
-    ctl.print();
+//    ctl.print();
     if (ctl.isAuto) {
         lt.trace();
     } else {
-        // motor1.setSpeed(100);
-        // motor2.setSpeed(100);
-        // motor3.setSpeed(100);
-        // delay(5000);
-        // motor1.setSpeed(0);
-        // motor2.setSpeed(0);
-        // motor3.setSpeed(0);
-        // delay(2000);
+//         motor1.setSpeed(100);
+//         motor2.setSpeed(100);
+         motor3.setSpeed(100);
+         delay(2000);
+//         motor1.setSpeed(0);
+//         motor2.setSpeed(0);
+         motor3.setSpeed(0);
+         delay(2000);
+//         motor1.setSpeed(-100);
+//         motor2.setSpeed(-100);
+         motor3.setSpeed(-100);
+         delay(2000);
         omni.move(ctl.vx, ctl.vy, ctl.vTheta);
-//        omni.move(127, 0, 0);
-//        delay(5000);
-//        omni.move(-127, 0, 0);
-//        delay(5000);
-//        omni.move(0, 127, 0);
-//        delay(5000);
-//        omni.move(0, -127, 0);
-//        delay(5000);
+//                omni.move(127, 0, 0);
+//                delay(1000);
+//                omni.move(-127, 0, 0);
+//                delay(1000);
+//                omni.move(0, 127, 0);
+//                delay(1000);
+//                omni.move(0, -127, 0);
+//                delay(1000);
         // arm.move(ctl.Height1, ctl.Height2);
     }
-    delay(100);
+    delay(10);
 }
