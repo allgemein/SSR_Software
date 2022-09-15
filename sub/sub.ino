@@ -23,10 +23,10 @@ void setup() {
     Wire.begin(uint8_t(8), 21, 22);
     Serial.begin(115200);
     //タイマを作成，1msで1カウントされるように設定
-    timer1 = timerBegin(0, getApbFrequency() / 1000, true);
-    timer2 = timerBegin(1, getApbFrequency() / 1000, true);
-    timerAttachInterrupt(timer1, move1, true);
-    timerAttachInterrupt(timer2, move2, true);
+    timer[0] = timerBegin(0, getApbFrequency() / 1000, true);
+    timer[1] = timerBegin(1, getApbFrequency() / 1000, true);
+    timerAttachInterrupt(timer[0], move1, true);
+    timerAttachInterrupt(timer[1], move2, true);
 }
 
 void loop() {
