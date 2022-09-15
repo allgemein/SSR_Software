@@ -23,17 +23,18 @@ Arm arm(8);
 Omni omni(motor1, motor2, motor3);
 
 LineTracer lt(omni);
-Debug debug(omni)
+Debug debug(motor1, motor2, motor3, omni);
 void loop() {
     Serial.println("loop...");
     ctl.update();
-    ctl.print();
+//    ctl.print();
+//    debug.debug(false, true);
+//    debug.debug(true, false);
     if (ctl.isAuto) {
-        // lt.trace();
-        debug.debug(true, true);
+         lt.trace();
     } else {
         omni.move(ctl.vx, ctl.vy, ctl.vTheta);
         // arm.move(ctl.Height1, ctl.Height2);
     }
-    delay(100);
+    delay(1000);
 }

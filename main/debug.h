@@ -5,7 +5,7 @@
 class Debug {
     public:
     Debug(Motor& motor1, Motor& motor2, Motor& motor3, Omni& omni);
-    void debug(bool check_omni, bool check_motor);
+    void debug(bool check_motor, bool check_omni);
 
     private:
     Omni& _omni;
