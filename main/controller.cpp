@@ -1,6 +1,12 @@
 #include "controller.h"
 
-Controller::Controller() {}
+Controller::Controller() {
+    _timer = timerBegin(0, 80, true);
+    timerAttachInterrupt(_timer, &change_accept_flag, true);
+    accept_circle_button = true;
+}
+
+volatile bool Controller::accept_circle_button;
 
 void Controller::update() {
     if (!PS4.isConnected()) {
@@ -25,7 +31,15 @@ void Controller::update() {
     if (PS4.L1()) vTheta = -1;
     if (PS4.R1()) vTheta = 1;
 
-    if (PS4.Circle()) isAuto = !isAuto;
+    if (PS4.Circle()) {
+        if (accept_circle_button) {
+            isAuto = !isAuto;
+            accept_circle_button = false;
+            timerAlarmWrite(_timer, 1000000, false);
+            timerWrite(_timer, 0);
+            timerAlarmEnable(_timer);
+        }
+    }
 
     if (PS4.LStickY()) {
         if (PS4.L2()) Height1 += kHeight * PS4.LStickY();
@@ -54,3 +68,5 @@ void Controller::print() {
     Serial.print(", Height2: ");
     Serial.println(Height2);
 }
+
+void IRAM_ATTR Controller::change_accept_flag() { accept_circle_button = true; }
