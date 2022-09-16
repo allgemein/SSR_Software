@@ -22,8 +22,8 @@ void Controller::update() {
 
     vTheta = 0;
 
-    if (PS4.L1()) vTheta += kTheta;
-    if (PS4.R1()) vTheta -= kTheta;
+    if (PS4.L1()) vTheta = -1;
+    if (PS4.R1()) vTheta = 1;
 
     if (PS4.Circle()) isAuto = !isAuto;
 
