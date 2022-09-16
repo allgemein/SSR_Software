@@ -1,10 +1,10 @@
 #include "arm.h"
 #include "controller.h"
-#include "debug.h"
 #include "linetracer.h"
 #include "motor.h"
 #include "omni.h"
 #include "pin.h"
+#include "debug.h"
 
 void setup() {
     Serial.begin(115200);
@@ -24,18 +24,18 @@ Omni omni(motor1, motor2, motor3);
 
 LineTracer lt(omni);
 Debug debug(motor1, motor2, motor3, omni);
-
 void loop() {
-    // Serial.println("loop...");
+//    Serial.println("loop...");
     ctl.update();
-    //    ctl.print();
-    // debug.debug(false, true);
-    // debug.debug(true, false);
+//    ctl.print();
+    
+//    debug.debug(true, false);
     if (ctl.isAuto) {
-        lt.trace();
+         lt.trace();
+//         debug.debug(false, true);
     } else {
-        omni.move(ctl.vx, ctl.vy, ctl.vTheta);
+        omni.move(-ctl.vx, -ctl.vy, ctl.vTheta);
         // arm.move(ctl.Height1, ctl.Height2);
     }
-    delay(100);
+    delay(10);
 }

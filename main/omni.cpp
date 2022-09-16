@@ -7,8 +7,8 @@ Omni::Omni(Motor& motor1, Motor& motor2, Motor& motor3)
 void Omni::move(float vx, float vy, float vtheta) {
     _vtheta = vtheta;
     float r = 50.0;
-    //    if (abs(vx) < _threshold) vx = 0;
-    //    if (abs(vy) < _threshold) vy = 0;
+    if (abs(vx) < _threshold) vx = 0;
+    if (abs(vy) < _threshold) vy = 0;
     // motor1
     // vx + rvtheta
     float v1 = vx + r * _vtheta;

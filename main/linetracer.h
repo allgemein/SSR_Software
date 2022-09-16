@@ -8,4 +8,5 @@ class LineTracer {
 
     private:
     Omni& _omni;
+    int _step = 0;
 };

@@ -50,28 +50,28 @@ void Debug::debug(bool check_motor, bool check_omni) {
         _motor3.setSpeed(0);
     }
     if (check_omni) {
-        // 前進
-        _omni.move(0, 100.0f, 0);
-        delay(2000);
-        // 後進
-        _omni.move(0, -100.0f, 0);
-        delay(2000);
-        delay(2000);
-        // 右
-        _omni.move(100.0f, 0.0f, 0.0f);
-        delay(2000);
-        _omni.move(0.0f, 0.0f, 0.0f);
-        delay(2000);
-        // 左
-        _omni.move(-100.0f, 0.0f, 0.0f);
-        delay(2000);
-        _omni.move(0.0f, 0.0f, 0.0f);
-        delay(2000);
+//        // 前進
+//        _omni.move(0, 100.0f, 0);
+//        delay(2000);
+//        // 後進
+//        _omni.move(0, -100.0f, 0);
+//        delay(2000);
+//        delay(2000);
+//        // 右
+//        _omni.move(100.0f, 0.0f, 0.0f);
+//        delay(2000);
+//        _omni.move(0.0f, 0.0f, 0.0f);
+//        delay(2000);
+//        // 左
+//        _omni.move(-100.0f, 0.0f, 0.0f);
+//        delay(2000);
+//        _omni.move(0.0f, 0.0f, 0.0f);
+//        delay(2000);
         // 時計回り
-        _omni.move(0, 0, 100);
+        _omni.move(0, 0, 90);
         delay(2000);
         // 反時計回り
-        _omni.move(0, 0, 100);
-        delay(2000);
+//        _omni.move(0, 0, 90);
+//        delay(2000);
     }
 }
