@@ -57,8 +57,8 @@ void loop() {
     } else {
         if (Wire.available()) {  //データがあったら読み取り
             String s[2];
-            s[0] = Serial.readStringUntil(',');   //モータ1の位置[cm]
-            s[1] = Serial.readStringUntil('\n');  //モータ2
+            s[0] = Wire.readStringUntil(',');   //モータ1の位置[cm]
+            s[1] = Wire.readStringUntil('\n');  //モータ2
             for (int motor_num = 0; motor_num < 2; motor_num++) {
                 target_y[motor_num] = s[motor_num].toInt();  //数値に変換
             }
