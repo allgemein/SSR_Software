@@ -63,10 +63,13 @@ void loop() {
                 target_y[motor_num] = s[motor_num].toInt();  //数値に変換
             }
         }
+
         //(ほぼ)特定周期ごとにパルスを出して回す
         for (int motor_num = 0; motor_num < 2; motor_num++) {
+            // cmからステップ数に変換
             int target_steps = target_y[motor_num] * steps_per_cm;
 
+            //目標に達していたら処理しない
             if (target_steps == current_steps[motor_num]) continue;
 
             //パルスを出力
@@ -87,6 +90,8 @@ void loop() {
                 current_steps[motor_num]--;
                 current_ex[motor_num] = (motor_num < 0 ? 4 : motor_num - 1);
             }
+
+            //周期ぶん待つ
             delayMicroseconds(delay_us);
         }
     }
