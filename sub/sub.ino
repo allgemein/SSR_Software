@@ -1,7 +1,10 @@
+#include <SoftwareSerial.h>
 #include <Wire.h>
 
 #include "pin.h"
 // #include "screw.h"
+#define MYPORT_TX 21
+#define MYPORT_RX 13
 
 const int delay_us = 5000;
 const int steps_per_rev = 200;
@@ -20,10 +23,13 @@ int current_ex[2] = {0, 0};
 
 const bool debug = false;
 
+SoftwareSerial SSerial;
+
 void setup() {
     //通信開始
     Wire.begin(uint8_t(8), 21, 22);
-    if (debug) Serial.begin(115200);
+    Serial.begin(115200);
+    SSerial.begin(115200);
 
     //出力ピンを設定
     for (int i = 0; i < 2; i++)
@@ -33,19 +39,28 @@ void setup() {
 void loop() {
     if (debug) {
         if (Serial.available()) {
-            String s[2];
+            String s[3];
+            bool is_cclockwise = false;
             s[0] = Serial.readStringUntil(',');
-            s[1] = Serial.readStringUntil('\n');
-            int delay_us = s[0].toInt();
-            int times = s[1].toInt();
+            s[1] = Serial.readStringUntil(',');
+            s[2] = Serial.readStringUntil('\n');
+            int motor_num = s[0].toInt();
+            int delay_us = s[1].toInt();
+            int times = s[2].toInt();
+            if (times < 0) {
+                is_cclockwise = true;
+                times = -times;
+            }
             for (int i = 0; i < times; i++) {
                 for (int j = 0; j < 4; j++) {
+                    int step = j;
+                    if (is_cclockwise) step = 3 - j;
                     for (int k = 0; k < 4; k++) {
-                        if (pulse[j][k]) {
-                            digitalWrite(pins[1][k], HIGH);
+                        if (pulse[step][k]) {
+                            digitalWrite(pins[motor_num][k], HIGH);
                             Serial.print("1 ");
                         } else {
-                            digitalWrite(pins[1][k], LOW);
+                            digitalWrite(pins[motor_num][k], LOW);
                             Serial.print("0 ");
                         }
                     }
@@ -55,10 +70,12 @@ void loop() {
             }
         }
     } else {
-        if (Wire.available()) {  //データがあったら読み取り
+        if (SSerial.available()) {  //データがあったら読み取り
             String s[2];
             s[0] = Wire.readStringUntil(',');   //モータ1の位置[cm]
             s[1] = Wire.readStringUntil('\n');  //モータ2
+            Serial.print(s[0]);
+            Serial.println(s[1]);
             for (int motor_num = 0; motor_num < 2; motor_num++) {
                 target_y[motor_num] = s[motor_num].toInt();  //数値に変換
             }
