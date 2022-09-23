@@ -1,12 +1,12 @@
 #pragma once
 #include <SoftwareSerial.h>
 
-#define MYPORT_TX 21
-#define MYPORT_RX 13
+#define MYPORT_TX 23
+#define MYPORT_RX 22
 
 class Arm {
     public:
     Arm();
-    SoftwareSerial SSerial;
+    //SoftwareSerial SSerial;
     void move(int y1, int y2);
 };

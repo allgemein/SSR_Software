@@ -1,93 +1,80 @@
 #include "linetracer.h"
 #include "pin.h"
 
-LineTracer::LineTracer(Omni &omni) : _omni(omni) { _step = 1; }
-
-void LineTracer::trace()
+LineTracer::LineTracer(Omni &omni) : _omni(omni)
 {
-  float rotate_speed = 1.0;
-  float rotate_speed_low = 0.5;
-  float forward_speed = -100.0;
-  float rotate_degree = 30;
-  int rotate_delay = 380;
+  _step = 0;
   pinMode(pin::sensorR, INPUT);
   pinMode(pin::sensorC, INPUT);
   pinMode(pin::sensorL, INPUT);
-  bool l = !digitalRead(pin::sensorR);
+}
+
+void LineTracer::trace()
+{
+  float slide_speed = 0.0;
+  float forward_speed = -100.0;
+  int rotate_delay = 380;
+  bool r = !digitalRead(pin::sensorR);
   bool c = !digitalRead(pin::sensorC);
-  bool r = !digitalRead(pin::sensorL);
-  Serial.print("r: ");
-  Serial.print(r);
-  Serial.print("c: ");
-  Serial.print(c);
-  Serial.print("l: ");
-  Serial.print(l);
-  Serial.print("\n");
+  bool l = !digitalRead(pin::sensorL);
   // 左センサーのみ
   // 左回転強
-  if (!r && !c && l)
+  if (!l && !c && r)
   {
-    rotate_speed = -40.0;
+    slide_speed = -40.0;
   }
 
   // 左・中央センサー
   // 左回転弱
-  else if (!r && c && l)
+  else if (!l && c && r)
   {
-    rotate_speed = -20.0;
+    slide_speed = -20.0;
   }
 
   // 右・中央センサー
   // 右回転弱
-  else if (r && c && !l)
+  else if (l && c && !r)
   {
-    rotate_speed = 20.0;
+    slide_speed = 20.0;
   }
 
   // 右センサーのみ
   // 右回転強
-  else if (r && !c && !l)
+  else if (l && !c && !r)
   {
-    rotate_speed = 40.0;
+    slide_speed = 40.0;
   }
-  else if (r && c && l)
+  // コーナー
+  if (l && c && r)
   {
-    forward_speed = 0.0;
     _step++;
+    forward_speed = 0.0;
+    rotate_speed = 0.0;
+    slide_speed = 0.0;
     if (_step == 1)
     {
-      _omni.move(0, -50, 0);
-      delay(200);
+      rotate_speed = 0.0;
     }
     else if (_step == 2)
     {
-      _omni.move(0, 0, rotate_degree);
-      delay(rotate_delay);
-      _omni.move(0, -50, 0);
-      delay(800);
+      rotate_speed = 30.0;
     }
     else if (_step == 3)
     {
-      _omni.move(0, 0, rotate_degree);
-      delay(rotate_delay);
-      _omni.move(0, -50, 0);
-      delay(800);
+      rotate_speed = 30.0;
     }
     else if (_step == 4)
     {
-      _omni.move(0, 0, -rotate_degree);
-      delay(rotate_delay);
-      _omni.move(0, -50, 0);
-      delay(800);
+      rotate_speed = -30;
     }
-    else if (_step == 5)
-    {
-      _omni.move(0, -50, 0);
-      delay(1000);
-    }
-    else if (_step == 6)
-    {
-    }
+    _omni.move(0, 0, rotate_speed);
+    delay(380);
+    _omni.move(0, -50, 0);
+    delay(800);
   }
-  _omni.move(rotate_speed, forward_speed, 0);
+  _omni.move(slide_speed, forward_speed, 0);
+}
+void LineTracer::reset()
+{
+  _step = 0;
 }

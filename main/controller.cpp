@@ -1,30 +1,45 @@
 #include "controller.h"
 
+#define MYPORT_1 13
+#define MYPORT_2 0
+
 Controller::Controller() {
     _timer = timerBegin(0, 80, true);
     timerAttachInterrupt(_timer, &change_accept_flag, true);
     accept_circle_button = true;
+    pinMode(MYPORT_1, OUTPUT);
+    pinMode(MYPORT_2, OUTPUT);
 }
 
 volatile bool Controller::accept_circle_button;
 
 void Controller::update() {
+    digitalWrite(MYPORT_1, LOW);
+    digitalWrite(MYPORT_2, LOW);
     if (!PS4.isConnected()) {
         Serial.println("Not Connected to controller");
     }
 
     if (PS4.Up()) {
-        if (PS4.Cross())
-            Height1 = 30;
-        else
-            Height2 = 30;
+        if (PS4.Cross()){
+            digitalWrite(MYPORT_1, HIGH);
+            Serial.println("up");
+        }
+        else{
+            digitalWrite(MYPORT_2, HIGH);
+            Serial.println("up-2");
+        }
     }
-    if (PS4.Down()) {
-        if (PS4.Cross())
-            Height1 = 0;
-        else
-            Height2 = 0;
-    }
+//    if (PS4.Down()) {
+//        if (PS4.Cross()){
+//            digitalWrite(MYPORT_1, LOW);
+//            Serial.println("down");
+//        }
+//        else{
+//            digitalWrite(MYPORT_2, LOW);
+//            Serial.println("down-2");
+//        }
+//    }
 
     vTheta = 0;
 

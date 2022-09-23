@@ -9,6 +9,7 @@ void Omni::move(float vx, float vy, float vtheta) {
     float r = 50.0;
     if (abs(vx) < _threshold) vx = 0;
     if (abs(vy) < _threshold) vy = 0;
+    
     // motor1
     // vx + rvtheta
     float v1 = vx + r * _vtheta;
@@ -20,14 +21,10 @@ void Omni::move(float vx, float vy, float vtheta) {
     float v2 = -0.5 * vx + (1.73 / 2) * vy + r * _vtheta;
     float speed2 = v2 * _k_motor2;
     _motor2.setSpeed(speed2);
-    // motor2
+
+    // motor3
     // -(1/2)vx - √3/2vy + rvtheta
     float v3 = -0.5 * vx - (1.73 / 2) * vy + r * _vtheta;
     float speed3 = v3 * _k_motor3;
     _motor3.setSpeed(speed3);
-
-    //     Serial.println(speed1);
-    //     Serial.println(speed2);
-    //     Serial.println(speed3);
-    Serial.println(_vtheta);
 }

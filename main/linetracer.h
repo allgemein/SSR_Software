@@ -5,6 +5,7 @@ class LineTracer {
     public:
     LineTracer(Omni& omni);
     void trace();
+    void reset();
 
     private:
     Omni& _omni;
