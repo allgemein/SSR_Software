@@ -8,6 +8,7 @@
 
 void setup() {
     Serial.begin(115200);
+    // Serial2.begin(9600, SERIAL_8N1, 16, 5);
     PS4.begin("1a:2b:3c:01:01:01");
 }
 
@@ -18,7 +19,7 @@ Motor motor1(0, pin::pwm1, pin::dir1);
 Motor motor2(1, pin::pwm2, pin::dir2);
 Motor motor3(2, pin::pwm3, pin::dir3);
 
-Arm arm();
+Arm arm;
 
 Omni omni(motor1, motor2, motor3);
 
@@ -35,7 +36,18 @@ void loop() {
         //         debug.debug(false, true);
     } else {
         omni.move(-ctl.vx, -ctl.vy, ctl.vTheta);
-        // arm.move(ctl.Height1, ctl.Height2);
+        arm.move(ctl.Height1, ctl.Height2);
     }
+    // if (Serial2.available()) {
+    //     Serial.println(Serial2.readStringUntil('\n'));
+    // }
+    // if (Serial.available()) {
+    //     String s[2];
+    //     s[0] = Serial.readStringUntil(',');   //モータ1の位置[cm]
+    //     s[1] = Serial.readStringUntil('\n');  //モータ2の位置[cm]
+    //     Serial.print(s[0]);
+    //     Serial.println(s[1]);
+    //     arm.move(s[0].toInt(), s[1].toInt());
+    // }
     delay(10);
 }

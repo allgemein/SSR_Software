@@ -13,17 +13,13 @@ void Controller::update() {
         Serial.println("Not Connected to controller");
     }
 
+    Height1 = 0;
+
     if (PS4.Up()) {
-        if (PS4.Cross())
-            Height1 = 30;
-        else
-            Height2 = 30;
+        Height1 = 1;
     }
     if (PS4.Down()) {
-        if (PS4.Cross())
-            Height1 = 0;
-        else
-            Height2 = 0;
+        Height1 = -1;
     }
 
     vTheta = 0;
